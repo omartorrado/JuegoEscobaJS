@@ -16,17 +16,41 @@ and open the template in the editor.
             var baraja = [];
             //la funcion nueva baraja crea X objetos cartas con un valor y un palo
             function nuevaBaraja() {
-                for (var i = 1; i < 8; i++) {
-                    var carta = {valor: i, palo: "Oros"};
-                    baraja.push(carta);
+                //al hacer una nueva baraja primero vacio la variable baraja
+                baraja = [];
+                //la lista de palos para que el for(p) los pille y asigne a cada carta segun corresponda
+                var palos = ["Oros", "Copas", "Bastos", "Espadas"];
+                //doble bucle for, uno para los palos y el otro para los numeros
+                for (var p = 0; p < 4; p++) {
+                    for (var i = 1; i < 13; ) {
+                        //el bucle va creando objetos carta con un valor y un palo
+                        var carta = {valor: i, palo: palos[p]};
+                        //añade cada carta a la var baraja
+                        baraja.push(carta);
+                        //condicion para que salte del 7 al 10 (ya que en la escoba no se usan 8 y 9)
+                        if (i === 7) {
+                            i = i + 3;
+                        } else {
+                            i++;
+                        }
+                        ;
+                    }
                 }
-                    document.getElementById("baraja").innerHTML = baraja[6].valor + " de " + baraja[6].palo;
-                    document.getElementById("longArray").innerHTML = baraja.length;
-                
+                //Mezclamos las cartas en el array baraja
+                baraja.sort(function(a,b){return 0.5 - Math.random()});
+                //Comprobaciones
+                document.getElementById("baraja").innerHTML = " "; //vacia el <p> "baraja"
+                //accede a las propiedades de cada carta en el array baraja y las añade al parrafo "baraja"
+                for (var i = 0; i < baraja.length; i++) {
+                    document.getElementById("baraja").innerHTML += baraja[i].valor + " de " + baraja[i].palo + "<br>";
+                }
+                //muestra la longitud del array baraja 
+                document.getElementById("longArray").innerHTML = baraja.length;
+
             }
         </script>
         <div>
-            <p id="baraja">baraja vacia</p>
+            <p id="baraja">baraja: </p>
             <p id="longArray">longitud baraja</p>
         </div>
         <div>
