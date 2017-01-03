@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            //creo el array baraja para jugar con los objetos carta
+            var baraja = [];
+            //la funcion nueva baraja crea X objetos cartas con un valor y un palo
+            function nuevaBaraja() {
+                for (var i = 1; i < 8; i++) {
+                    var carta = {valor: i, palo: "Oros"};
+                    baraja.push(carta);
+                }
+                    document.getElementById("baraja").innerHTML = baraja[6].valor + " de " + baraja[6].palo;
+                    document.getElementById("longArray").innerHTML = baraja.length;
+                
+            }
+        </script>
+        <div>
+            <p id="baraja">baraja vacia</p>
+            <p id="longArray">longitud baraja</p>
+        </div>
+        <div>
+            <button onclick="nuevaBaraja()">Boton</button>
+        </div>
+    </body>
+</html>
