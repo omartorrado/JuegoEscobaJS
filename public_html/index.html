@@ -14,6 +14,8 @@ and open the template in the editor.
         <script>
             //creo el array baraja para jugar con los objetos carta
             var baraja = [];
+            //del array mesa deberia mostrar todos los elementos en diferentes etiquetas
+            //para poder seleccionar las cartas individualemente
             var mesa = [];
             var jugada = [];
             //creo un array para guardar los objetos jugador (segun cuantos jugadores haya)
@@ -49,20 +51,11 @@ and open the template in the editor.
                 }
                 //Mezclamos las cartas en el array baraja
                 baraja.sort(function (a, b) {
-                    return 0.5 - Math.random()
+                    return 0.5 - Math.random();
                 });
-                //Comprobaciones
-                document.getElementById("baraja").innerHTML = " "; //vacia el <p> "baraja"
-                //accede a las propiedades de cada carta en el array baraja y las añade al parrafo "baraja"
-                for (var i = 0; i < baraja.length; i++) {
-                    document.getElementById("baraja").innerHTML += baraja[i].valor + " de " + baraja[i].palo + "<br>";
-                }
-                //muestra la longitud del array baraja 
-                document.getElementById("longArray").innerHTML = baraja.length;
-
+                //muestra la longitud del array baraja AHORA MISMO NO EXISTE "longArray"
+                //document.getElementById("longArray").innerHTML = baraja.length;
             }
-
-            //function turnoJugador()
 
             function repartir() {
                 for (var i = 0; i < 3; i++) {
@@ -73,19 +66,46 @@ and open the template in the editor.
                         actualizaMano(j, "j" + (j + 1));
                     }
                 }
-                //sucio, esto deberia ser un metodo. actualiza la baraja (usado ya arriba)
+            }
+
+            function inicioMesa() {
+                for (var i = 0; i < 4; i++) {
+                    mesa.push(baraja.pop());
+                }
+            }
+
+            function turnoJugador(nJugador) {
+                //aki el jugador n debe escoger una carta de su mano y X cartas de la mesa
+
+                //si pulsa un boton "jugar carta" comprobamos que la suma de los valores
+                //de las cartas seleccionadas sea 15. si es 15 se envia la jugada a las ganadas
+                //del jugador n(y se eliminan de mesa y mano)
+
+                //si la suma no es 15 se kita la carta de mano y se guarda en mesa
+                //y limpiamos el array jugada. En dicho array se hace push, pero no pop
+                //del array mesa. Por ultimo acaba el turno y se hace lo mismo para el
+                //siguiente jugador
+
+                //aki tengo k tener en cuenta las escobas e ir anotandolas en algun sitio
+                //¿otra variable "puntos" en jugador?
+            }
+
+
+            //esta funcion es solo para testeos, no tiene mucho sentido en el juego
+            function actualizaBaraja() {
                 document.getElementById("baraja").innerHTML = " ";
                 for (var i = 0; i < baraja.length; i++) {
                     document.getElementById("baraja").innerHTML += baraja[i].valor + " de " + baraja[i].palo + "<br>";
                 }
+            }
 
+
+            function actualizaMesa() {
 
             }
 
-            function inicioMesa() {
-
-            }
-
+            //Esta funcion deberia crear un nuevo elemento en el html para poder
+            //seleccionarlo luego con un evento onclick por ejemplo
             function actualizaMano(nJugador, parrafoId) {
                 document.getElementById(parrafoId).innerHTML = " ";
                 for (var i = 0; i < jugadores[nJugador].mano.length; i++) {
@@ -93,16 +113,71 @@ and open the template in the editor.
                 }
             }
 
+            //No se si dejar esto asi o directamente meter todo el codigo en actualiza
+            function actualiza() {
+                actualizaBaraja();
+                //esto no funciona ahora mismo por como esta la funcion hecha para funcionar con repartir        
+                //actualizaMano();
+                actualizaMesa();
+            }
+
+            //AKI ESTA EL JUEGO EN SI
+            function nuevoJuego() {
+                //creamos baraja
+                nuevaBaraja();
+                //repartimos cartas a los jugadores
+                repartir();
+                //repartimos las 4 de la mesa
+                inicioMesa();
+                //TESTEO actualizo baraja
+                actualiza();
+                //iniciamos la secuencia de la partida (funcion turnoJugador() sin definir)
+                do {
+                    //cada turno se juega tres veces por jugador
+                    for (var i = 0; i < 3; i++) {
+                        for (var j = 0; j < jugadores.length; j++) {
+                            //este if probablemente sobre, lo dejo de momento por si acaso
+                            if (jugadores[j].mano.lenght > 0) {
+                                turnoJugador(j);
+                            }
+                            actualiza();
+                        }
+                    }
+                    //este if probablemente si sea necesario en la ultima mano
+                    if (baraja.lenght > 0) {
+                        repartir();
+                    }
+                } while (baraja.lenght > 0);
+                //Aki vendria el recuento de puntos. tendré que buscar en los arrays
+                //ganadas de cada jugador los 7, oros, contar las cartas y compararlos
+                //entre ellos
+            }
+
 
         </script>
         <div>
-            <p id="baraja">baraja: </p>
-            <p id="longArray">longitud baraja</p>
-            <p id="j1"></p>
-            <p id="j2"></p>
+            <table>
+                <tr>
+                    <td>
+                        <table id="baraja">baraja: </table>
+                    </td>
+                    <td>
+                        <table id="j1"></table>
+                    </td>
+                    <td>
+                        <p id="j2"></p>
+                    </td>
+                    <td>
+                        <p id="j3"></p>
+                    </td>
+                    <td>
+                        <p id="j4"></p>
+                    </td>
+                </tr>
+            </table>
         </div>
         <div>
-            <button onclick="nuevaBaraja()">Nueva</button>
+            <button onclick="nuevoJuego()">Nueva</button>
             <button onclick="repartir()">Repartir</button>
         </div>
 
