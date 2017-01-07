@@ -14,6 +14,17 @@ and open the template in the editor.
         <script>
             //creo el array baraja para jugar con los objetos carta
             var baraja = [];
+            var mesa = [];
+            var jugada = [];
+            //creo un array para guardar los objetos jugador (segun cuantos jugadores haya)
+            //De momento la inicializo con 2 jugadores para testeos
+            //deberia ser un for numeroDeJugadores que cree n objetos jugadores
+            var jugadores = [
+                //en mano iremos guardando y borrando las cartas cogidas/usadas en cada turno
+                //en ganadas guardaremos las cartas ganadas en cada mano
+                {mano: [], ganadas: []},
+                {mano: [], ganadas: []}
+            ];
             //la funcion nueva baraja crea X objetos cartas con un valor y un palo
             function nuevaBaraja() {
                 //al hacer una nueva baraja primero vacio la variable baraja
@@ -37,7 +48,9 @@ and open the template in the editor.
                     }
                 }
                 //Mezclamos las cartas en el array baraja
-                baraja.sort(function(a,b){return 0.5 - Math.random()});
+                baraja.sort(function (a, b) {
+                    return 0.5 - Math.random()
+                });
                 //Comprobaciones
                 document.getElementById("baraja").innerHTML = " "; //vacia el <p> "baraja"
                 //accede a las propiedades de cada carta en el array baraja y las añade al parrafo "baraja"
@@ -48,13 +61,50 @@ and open the template in the editor.
                 document.getElementById("longArray").innerHTML = baraja.length;
 
             }
+
+            //function turnoJugador()
+
+            function repartir() {
+                for (var i = 0; i < 3; i++) {
+                    for (var j = 0; j < jugadores.length; j++) {
+                        jugadores[j].mano.push(baraja.pop());
+                        //uso j(numero de jugadores) para coger los datos de cada jugador(mano)
+                        //y j+1 para que los muestre en el parrafo"j"+numero de jugadores
+                        actualizaMano(j, "j" + (j + 1));
+                    }
+                }
+                //sucio, esto deberia ser un metodo. actualiza la baraja (usado ya arriba)
+                document.getElementById("baraja").innerHTML = " ";
+                for (var i = 0; i < baraja.length; i++) {
+                    document.getElementById("baraja").innerHTML += baraja[i].valor + " de " + baraja[i].palo + "<br>";
+                }
+
+
+            }
+
+            function inicioMesa() {
+
+            }
+
+            function actualizaMano(nJugador, parrafoId) {
+                document.getElementById(parrafoId).innerHTML = " ";
+                for (var i = 0; i < jugadores[nJugador].mano.length; i++) {
+                    document.getElementById(parrafoId).innerHTML += jugadores[nJugador].mano[i].valor + " de " + jugadores[nJugador].mano[i].palo + "<br>";
+                }
+            }
+
+
         </script>
         <div>
             <p id="baraja">baraja: </p>
             <p id="longArray">longitud baraja</p>
+            <p id="j1"></p>
+            <p id="j2"></p>
         </div>
         <div>
-            <button onclick="nuevaBaraja()">Boton</button>
+            <button onclick="nuevaBaraja()">Nueva</button>
+            <button onclick="repartir()">Repartir</button>
         </div>
+
     </body>
 </html>
