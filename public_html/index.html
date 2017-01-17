@@ -37,7 +37,7 @@ and open the template in the editor.
                 for (var p = 0; p < 4; p++) {
                     for (var i = 1; i < 13; ) {
                         //el bucle va creando objetos carta con un valor y un palo
-                        var carta = {valor: i, palo: palos[p]};
+                        var carta = {valor: i, palo: palos[p], id: i+"de"+palos[p]};
                         //añade cada carta a la var baraja
                         baraja.push(carta);
                         //condicion para que salte del 7 al 10 (ya que en la escoba no se usan 8 y 9)
