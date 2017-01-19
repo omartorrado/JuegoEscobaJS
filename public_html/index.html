@@ -99,9 +99,9 @@ and open the template in the editor.
 
             //esta funcion es solo para testeos, no tiene mucho sentido en el juego
             function actualizaBaraja() {
-                document.getElementById("mazo").innerHTML = " ";
+                document.getElementByClass("mazo").innerHTML = " ";
                 for (var i = 0; i < baraja.length; i++) {
-                    document.getElementById("mazo").innerHTML += baraja[i].numero + " de " + baraja[i].palo + "<br>";
+                    document.getElementByClass("mazo").innerHTML += baraja[i].numero + " de " + baraja[i].palo + "<br>";
                 }
             }
 
