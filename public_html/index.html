@@ -41,7 +41,7 @@ and open the template in the editor.
                     var valorCarta=1;
                     for (var i = 1; i < 13; ) {
                         //el bucle va creando objetos carta con un valor, un palo y el numero k sale en la carta
-                        var carta = {valor: valorCarta, palo: palos[p],numero: i};
+                        var carta = {valor: valorCarta, palo: palos[p], numero: i};
                         //añade cada carta a la var baraja
                         baraja.push(carta);
                         //Incrementamos la variable valor
@@ -101,7 +101,7 @@ and open the template in the editor.
             function actualizaBaraja() {
                 document.getElementById("mazo").innerHTML = " ";
                 for (var i = 0; i < baraja.length; i++) {
-                    document.getElementById("mazo").innerHTML += baraja[i].valor + " de " + baraja[i].palo + "<br>";
+                    document.getElementById("mazo").innerHTML += baraja[i].numero + " de " + baraja[i].palo + "<br>";
                 }
             }
 
@@ -115,7 +115,7 @@ and open the template in the editor.
             function actualizaMano(nJugador, parrafoId) {
                 document.getElementById(parrafoId).innerHTML = " ";
                 for (var i = 0; i < jugadores[nJugador].mano.length; i++) {
-                    document.getElementById(parrafoId).innerHTML += jugadores[nJugador].mano[i].valor + " de " + jugadores[nJugador].mano[i].palo + "<br>";
+                    document.getElementById(parrafoId).innerHTML += jugadores[nJugador].mano[i].numero + " de " + jugadores[nJugador].mano[i].palo + "<br>";
                 }
             }
 
