@@ -33,15 +33,21 @@ and open the template in the editor.
                 baraja = [];
                 //la lista de palos para que el for(p) los pille y asigne a cada carta segun corresponda
                 var palos = ["Oros", "Copas", "Bastos", "Espadas"];
+                
                 //doble bucle for, uno para los palos y el otro para los numeros
                 for (var p = 0; p < 4; p++) {
+                    //Variable valor de la carta (Pq el numero y el valor varian en la baraja española)
+                    //La inicializamos aki a uno para que con cada vuelta del primer for se reseteé
+                    var valorCarta=1;
                     for (var i = 1; i < 13; ) {
-                        //el bucle va creando objetos carta con un valor y un palo
-                        var carta = {valor: i, palo: palos[p]};
+                        //el bucle va creando objetos carta con un valor, un palo y el numero k sale en la carta
+                        var carta = {valor: valorCarta, palo: palos[p],numero: i};
                         //añade cada carta a la var baraja
                         baraja.push(carta);
+                        //Incrementamos la variable valor
+                        valorCarta++;
                         //condicion para que salte del 7 al 10 (ya que en la escoba no se usan 8 y 9)
-                        if (i === 7) {
+                        if (i == 7) {
                             i = i + 3;
                         } else {
                             i++;
@@ -62,7 +68,7 @@ and open the template in the editor.
                     for (var j = 0; j < jugadores.length; j++) {
                         jugadores[j].mano.push(baraja.pop());
                         //uso j(numero de jugadores) para coger los datos de cada jugador(mano)
-                        //y j+1 para que los muestre en el parrafo"j"+numero de jugadores
+                        //y j+1 para que los muestre en el parrafo"j"+numero de jugador
                         actualizaMano(j, "j" + (j + 1));
                     }
                 }
@@ -93,9 +99,9 @@ and open the template in the editor.
 
             //esta funcion es solo para testeos, no tiene mucho sentido en el juego
             function actualizaBaraja() {
-                document.getElementById("baraja").innerHTML = " ";
+                document.getElementById("mazo").innerHTML = " ";
                 for (var i = 0; i < baraja.length; i++) {
-                    document.getElementById("baraja").innerHTML += baraja[i].valor + " de " + baraja[i].palo + "<br>";
+                    document.getElementById("mazo").innerHTML += baraja[i].valor + " de " + baraja[i].palo + "<br>";
                 }
             }
 
@@ -155,26 +161,11 @@ and open the template in the editor.
 
 
         </script>
-        <div>
-            <table>
-                <tr>
-                    <td>
-                        <table id="baraja">baraja: </table>
-                    </td>
-                    <td>
-                        <table id="j1"></table>
-                    </td>
-                    <td>
-                        <p id="j2"></p>
-                    </td>
-                    <td>
-                        <p id="j3"></p>
-                    </td>
-                    <td>
-                        <p id="j4"></p>
-                    </td>
-                </tr>
-            </table>
+        <div class="frame">
+            <div class="mazo"></div>
+            <div class="mesa"></div>
+            <div id="j1"></div>
+            <div id="j2"></div>
         </div>
         <div>
             <button onclick="nuevoJuego()">Nueva</button>
